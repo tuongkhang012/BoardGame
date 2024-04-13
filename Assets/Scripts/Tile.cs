@@ -18,7 +18,7 @@ public class Tile
     public Tile(int Id, string TileType, string TileName, Sprite TileImage)
     {
         this.id = Id;
-        this.tileType = TileName;
+        this.tileType = TileType;
         this.tileName = TileName;
         this.tileImage = TileImage;
     }

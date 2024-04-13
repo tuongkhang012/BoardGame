@@ -12,10 +12,12 @@ public class DisplayTile : MonoBehaviour
     public int id;
     public string tileType;
     public string tileName;
-    public Sprite tileImage;
+    public Sprite frontImage;
+    public Sprite backImage;
+    public bool isFacedDown;
 
     public TextMeshProUGUI nameText;
-    public Image frontImage;
+    public Image tileImage;
 
     void Start()
     {
@@ -24,13 +26,22 @@ public class DisplayTile : MonoBehaviour
         id = displayTile.id;
         tileType = displayTile.tileType;
         tileName = displayTile.tileName;
-        tileImage = displayTile.tileImage;
+        frontImage = displayTile.tileImage;
 
         nameText.text = tileName;
-        frontImage.sprite = tileImage;
     }
+
     void Update()
     {
-        
+        if (isFacedDown)
+        {
+            tileImage.sprite = backImage;
+            nameText.enabled = false;
+        }
+        else
+        {
+            tileImage.sprite = frontImage;
+            nameText.enabled = true;
+        }
     }
 }
