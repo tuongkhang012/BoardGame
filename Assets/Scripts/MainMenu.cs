@@ -7,12 +7,12 @@ public class MainMenu : MonoBehaviour
 {
     public void StartGameWithAI()
     {
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("GameAI");
     }
 
     public void StartGameWithPlayer()
     {
-        SceneManager.LoadScene("MainGame");
+        SceneManager.LoadScene("GameVS");
     }
 
     public void QuitGame()
