@@ -15,6 +15,7 @@ public class DisplayTile : MonoBehaviour
     public Sprite frontImage;
     public Sprite backImage;
     public bool isFacedDown;
+    public int angle = 0;
 
     public TextMeshProUGUI nameText;
     public Image tileImage;

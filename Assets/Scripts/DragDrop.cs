@@ -17,7 +17,7 @@ public class DragDrop : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "DropZone")
+        if (collision.gameObject.name == "DiscardZoneB")
         {
             dropZone = collision.gameObject;
             isOverDropZone = true;
@@ -26,7 +26,7 @@ public class DragDrop : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "DropZone")
+        if (collision.gameObject.name == "DiscardZoneB")
         {
             isOverDropZone = false;
             dropZone = null;

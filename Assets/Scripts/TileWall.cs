@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Mirror;
 
-public class TileWall : MonoBehaviour
+public class TileWall : NetworkBehaviour
 {
     public List<Tile> wall = new List<Tile>();
     public List<Tile> dora = new List<Tile>();
@@ -13,13 +14,14 @@ public class TileWall : MonoBehaviour
     public int handSize = 13;
     public int wallSize = 70;
 
-    public GameObject tilePrefab;
     public GameObject player1Hand;
 
     public TextMeshProUGUI wallSizeText;
 
-    void Start()
+    public override void OnStartServer()
     {
+        base.OnStartServer();
+
         // Creating the deck with 4 of each tiles (with the exception of the 5, it would have one 0)
         for (int i = 0; i < 4; i++)
         {
@@ -55,15 +57,6 @@ public class TileWall : MonoBehaviour
         }
 
         wallSizeText.text = "x" + wall.Count.ToString();
-
-        for (int i = 0; i < handSize; i++)
-        {
-            GameObject temp = Instantiate(tilePrefab, new Vector2(0,0), Quaternion.identity);
-            temp.transform.SetParent(player1Hand.transform);
-            //temp.transform.localPosition = new Vector2(0, 0);
-            temp.GetComponent<DisplayTile>().displayId = wall[i].id;
-            wall.RemoveAt(i);
-        }
     }
 
     // Update is called once per frame
