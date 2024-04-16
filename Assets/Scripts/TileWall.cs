@@ -2,26 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using Mirror;
+using Unity.Netcode;
 
 public class TileWall : NetworkBehaviour
 {
-    public List<Tile> wall = new List<Tile>();
-    public List<Tile> dora = new List<Tile>();
+    public NetworkList<int> wall;
+    public NetworkList<int> dora;
 
     public int fullSize = 136;
     public int doraSize = 14;
     public int handSize = 13;
     public int wallSize = 70;
 
-    public GameObject player1Hand;
-
     public TextMeshProUGUI wallSizeText;
 
-    public override void OnStartServer()
+    private void Awake()
     {
-        base.OnStartServer();
+        wall = new NetworkList<int>(new List<int>(), NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+        dora = new NetworkList<int>(new List<int>(), NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    }
 
+    public void Start()
+    {
         // Creating the deck with 4 of each tiles (with the exception of the 5, it would have one 0)
         for (int i = 0; i < 4; i++)
         {
@@ -43,8 +45,8 @@ public class TileWall : NetworkBehaviour
                         continue;
                     }
                 }
-                
-                wall.Add(TileDatabase.tileList[j]);
+
+                wall.Add(TileDatabase.tileList[j].id);
             }
         }
         Shuffle();
@@ -70,7 +72,7 @@ public class TileWall : NetworkBehaviour
         for (int i = 0; i < fullSize; i++)
         {
             int randomIndex = Random.Range(i, fullSize);
-            Tile temp = wall[i];
+            int temp = wall[i];
             wall[i] = wall[randomIndex];
             wall[randomIndex] = temp;
         }

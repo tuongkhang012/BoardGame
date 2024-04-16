@@ -1,103 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
-using Mirror;
-using Unity.Collections.LowLevel.Unsafe;
 
 public class PlayerManager : NetworkBehaviour
 {
-    public GameObject tileWall;
+    [SerializeField] private NetworkVariable<int> token = new NetworkVariable<int>(25000, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    [SerializeField] public List<int> handTiles;
+    [SerializeField] private GameObject tilePrefab;
+    [SerializeField] private GameObject playerHand;
 
-    public GameObject playerHand;
-    public GameObject enemyHandL;
-    public GameObject enemyHandR;
-    public GameObject enemyHandU;
-    public GameObject discardZoneB;
-    public GameObject discardZoneL;
-    public GameObject discardZoneR;
-    public GameObject discardZoneU;
+    [SerializeField] private GameObject tileWallPrefab;
+    [SerializeField] private GameObject tileWall;
+    [SerializeField] private GameObject canvas;
 
-    public NetworkIdentity networkIdentity;
-
-    public GameObject tilePrefab;
-
-    [SyncVar]
-    private string playerDirection;
-
-    [SyncVar]
-    public int playerToken = 25000;
-
-    private static int nextPlayerIndex = -1;
-    private static string[] players = new string[] { "E", "S", "W", "N" };
-
-    public List<Tile> handTiles = new List<Tile>();
-
-    public override void OnStartClient()
+    public override void OnNetworkSpawn()
     {
-        base.OnStartClient();
-    }
+        token.OnValueChanged += (int previousValue, int newValue) =>{
+            Debug.Log($"Token: {newValue}");
+        };
 
-    public override void OnStartServer()
-    {
-        base.OnStartServer();
+        playerHand = GameObject.Find("PlayerHand");
+        tileWall = GameObject.Find("Wall");
 
-        if (nextPlayerIndex == -1)
+        if (IsOwner)
         {
-            nextPlayerIndex = Random.Range(0, 4);
-        }
-
-        playerDirection = players[nextPlayerIndex];
-        nextPlayerIndex = (nextPlayerIndex + 1) % players.Length;
-
-        networkIdentity.AssignClientAuthority(connectionToClient);
-
-        StartCoroutine(DrawInitialTiles());
-    }
-
-    private IEnumerator DrawInitialTiles()
-    {
-        // Wait until the client is ready
-        while (!NetworkClient.ready)
-        {
-            yield return null;
-        }
-
-        // Draw 13 tiles for the player
-        for (int i = 0; i < 13; i++)
-        {
-            CmdDrawTile(tileWall.GetComponent<TileWall>());
+            for (int i = 0; i < 13; i++)
+            {
+                DrawTileServerRpc();
+            }
+            handTiles.Sort();
+            SpawnTileClientRpc();
         }
     }
 
-    public string GetPlayerDirection()
+    private void Update()
     {
-        return playerDirection;
-    }
+        if (!IsOwner) return;
 
-    [Command]
-    public void CmdDrawTile(TileWall tileWall)
-    {
-        if (tileWall.wall.Count > 0)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Tile tile = tileWall.wall[0];
-            tileWall.wall.RemoveAt(0);
-            // Send the tile to the client
-            TargetReceiveTile(tile);
+            token.Value += 1000;
         }
     }
 
-    [TargetRpc]
-    private void TargetReceiveTile(Tile tile)
+    [ServerRpc(RequireOwnership = false)]
+    private void DrawTileServerRpc()
     {
-        handTiles.Add(tile);
-        RenderTile(tile);
+        int newTile = tileWall.GetComponent<TileWall>().wall[0];
+        handTiles.Add(newTile);
+        tileWall.GetComponent<TileWall>().wall.RemoveAt(0);
     }
 
-    private void RenderTile(Tile tile)
+    [ClientRpc]
+    public void SpawnTileClientRpc()
     {
-        GameObject temp = Instantiate(tilePrefab, new Vector2(0, 0), Quaternion.identity);
-        NetworkServer.Spawn(temp, connectionToClient);
-        temp.transform.SetParent(playerHand.transform);
-        temp.GetComponent<DisplayTile>().displayId = tile.id;
+        for (int i = 0; i < handTiles.Count; i++)
+        {
+            GameObject tile = Instantiate(tilePrefab, new Vector2(0, 0), Quaternion.identity);
+            tile.GetComponent<DisplayTile>().displayId = handTiles[i];
+            NetworkObject networkTile = tile.GetComponent<NetworkObject>();
+            networkTile.Spawn();
+            networkTile.transform.SetParent(playerHand.transform);
+        }
     }
 }
