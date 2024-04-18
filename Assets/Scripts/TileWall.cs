@@ -15,14 +15,32 @@ public class TileWall : NetworkBehaviour
     public int wallSize = 70;
 
     public TextMeshProUGUI wallSizeText;
+    public GameManager gameManager;
 
     private void Awake()
     {
         wall = new NetworkList<int>(new List<int>(), NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
         dora = new NetworkList<int>(new List<int>(), NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
-    public void Start()
+    public override void OnNetworkSpawn()
+    {
+        if (!IsServer)
+        {
+            Debug.Log("Unauthorized");
+            return;
+        }
+        Create();
+        wallSizeText.text = "x" + wall.Count.ToString();
+    }
+
+    void Update()
+    {
+        wallSizeText.text = "x" + wall.Count.ToString();
+    }
+
+    void Create()
     {
         // Creating the deck with 4 of each tiles (with the exception of the 5, it would have one 0)
         for (int i = 0; i < 4; i++)
@@ -31,7 +49,7 @@ public class TileWall : NetworkBehaviour
             {
                 if (i == 0)
                 {
-                    if (TileDatabase.tileList[j].tileType == "5m" || TileDatabase.tileList[j].tileType == "5s" 
+                    if (TileDatabase.tileList[j].tileType == "5m" || TileDatabase.tileList[j].tileType == "5s"
                         || TileDatabase.tileList[j].tileType == "5p")
                     {
                         continue;
@@ -57,14 +75,6 @@ public class TileWall : NetworkBehaviour
             dora.Add(wall[wall.Count - i - 1]);
             wall.RemoveAt(wall.Count - i - 1);
         }
-
-        wallSizeText.text = "x" + wall.Count.ToString();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        wallSizeText.text = "x" + wall.Count.ToString();
     }
 
     void Shuffle()
@@ -76,5 +86,23 @@ public class TileWall : NetworkBehaviour
             wall[i] = wall[randomIndex];
             wall[randomIndex] = temp;
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DrawTileServerRpc(ulong clientId)
+    {
+        if (wall.Count == 0)
+        {
+            //Change to endround
+            return;
+        }
+
+        int tile = wall[wall.Count - 1];
+        wall.RemoveAt(wall.Count - 1);
+
+        NetworkClient client = NetworkManager.Singleton.ConnectedClients[clientId];
+        PlayerManager player = client.PlayerObject.GetComponent<PlayerManager>();
+
+        player.ReceiveTileClientRpc(tile);
     }
 }

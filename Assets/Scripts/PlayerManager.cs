@@ -9,13 +9,17 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] public List<int> handTiles;
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private GameObject playerHand;
-
+    
     [SerializeField] private GameObject tileWallPrefab;
     [SerializeField] private GameObject tileWall;
     [SerializeField] private GameObject canvas;
 
+    [SerializeField] private GameManager gameManager;
+    [SerializeField] private bool isAssigned = false;
+
     public override void OnNetworkSpawn()
     {
+        Debug.Log("Player spawned " + OwnerClientId);
         token.OnValueChanged += (int previousValue, int newValue) =>{
             Debug.Log($"Token: {newValue}");
         };
@@ -23,20 +27,18 @@ public class PlayerManager : NetworkBehaviour
         playerHand = GameObject.Find("PlayerHand");
         tileWall = GameObject.Find("Wall");
 
-        if (IsOwner)
-        {
-            for (int i = 0; i < 13; i++)
-            {
-                DrawTileServerRpc();
-            }
-            handTiles.Sort();
-            SpawnTileClientRpc();
-        }
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     private void Update()
     {
         if (!IsOwner) return;
+
+        if (!isAssigned)
+        {
+            gameManager.AssignPlayerServerRpc(OwnerClientId);
+            isAssigned = true;
+        }
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -44,24 +46,11 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    private void DrawTileServerRpc()
-    {
-        int newTile = tileWall.GetComponent<TileWall>().wall[0];
-        handTiles.Add(newTile);
-        tileWall.GetComponent<TileWall>().wall.RemoveAt(0);
-    }
-
     [ClientRpc]
-    public void SpawnTileClientRpc()
+    public void ReceiveTileClientRpc(int tile)
     {
-        for (int i = 0; i < handTiles.Count; i++)
-        {
-            GameObject tile = Instantiate(tilePrefab, new Vector2(0, 0), Quaternion.identity);
-            tile.GetComponent<DisplayTile>().displayId = handTiles[i];
-            NetworkObject networkTile = tile.GetComponent<NetworkObject>();
-            networkTile.Spawn();
-            networkTile.transform.SetParent(playerHand.transform);
-        }
+        if (!IsOwner) return;
+
+        handTiles.Add(tile);
     }
 }
