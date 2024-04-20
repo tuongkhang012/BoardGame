@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 884840433287118706}
   - component: {fileID: 1631303738488503629}
   - component: {fileID: 6738994332847576009}
-  - component: {fileID: 5204893050291345923}
   - component: {fileID: 525953699273099655}
   - component: {fileID: 4224296560889252715}
   - component: {fileID: 2522836007713539644}
@@ -243,18 +242,6 @@ MonoBehaviour:
   angle: 0
   nameText: {fileID: 135017863119026296}
   tileImage: {fileID: 1631303738488503629}
---- !u!114 &5204893050291345923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5419383828522342354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8d1eb084c7e4d24b8070509d2b61650, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &525953699273099655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,7 +259,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5204893050291345923}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: DragDrop, Assembly-CSharp
           m_MethodName: StartDrag
           m_Mode: 1
@@ -288,7 +275,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 5204893050291345923}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: DragDrop, Assembly-CSharp
           m_MethodName: EndDrag
           m_Mode: 1
