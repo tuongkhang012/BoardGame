@@ -5,19 +5,22 @@ using UnityEngine;
 public class DragDrop : MonoBehaviour
 {
     private bool isDragging = false;
-    private GameObject startParent;
-    private Vector2 startPosition;
-    private GameObject dropZone;
     private bool isOverDropZone;
 
-    void Start()
+    private Vector2 startPosition;
+
+    private GameObject startParent;
+    private GameObject dropZone;
+    private GameManager gameManager;
+
+    void Awake()
     {
-        
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "DropZone")
+        if (collision.gameObject.name == "DiscardZoneB")
         {
             dropZone = collision.gameObject;
             isOverDropZone = true;
@@ -26,7 +29,7 @@ public class DragDrop : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "DropZone")
+        if (collision.gameObject.name == "DiscardZoneB")
         {
             isOverDropZone = false;
             dropZone = null;
@@ -56,6 +59,13 @@ public class DragDrop : MonoBehaviour
 
         if (isOverDropZone)
         {
+            if (gameManager.turn.Value != 0)
+            {
+                transform.position = startPosition;
+                transform.SetParent(startParent.transform, false);
+                return;
+            }
+
             transform.SetParent(dropZone.transform, false);
         }
         else

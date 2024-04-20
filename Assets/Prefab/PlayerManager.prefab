@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &9093729058179306698
+--- !u!1 &9101731914925265377
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8729389110736507285}
-  - component: {fileID: 4474881212789399884}
-  - component: {fileID: 6754416238754132883}
+  - component: {fileID: 1877235277893633656}
+  - component: {fileID: 731403525852419293}
+  - component: {fileID: 4694972358853932902}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -18,69 +18,76 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8729389110736507285
+--- !u!4 &1877235277893633656
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9093729058179306698}
+  m_GameObject: {fileID: 9101731914925265377}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 943.21204, y: 506.1912, z: 0}
+  m_LocalPosition: {x: 963.23315, y: 528.47955, z: -6.763936}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4474881212789399884
+--- !u!114 &731403525852419293
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9093729058179306698}
+  m_GameObject: {fileID: 9101731914925265377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneId: 0
-  _assetId: 0
-  serverOnly: 0
-  visibility: 0
-  hasSpawned: 0
---- !u!114 &6754416238754132883
+  GlobalObjectIdHash: 3243326905
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &4694972358853932902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9093729058179306698}
+  m_GameObject: {fileID: 9101731914925265377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Script: {fileID: 11500000, guid: d37c5decb30943b4a97de2cc5df89634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 1
-  syncMode: 0
-  syncInterval: 0
-  target: {fileID: 8729389110736507285}
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 0
-  onlySyncOnChange: 1
-  compressRotation: 1
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 1
-  coordinateSpace: 0
-  sendIntervalMultiplier: 1
-  timelineOffset: 0
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
-  onlySyncOnChangeCorrectionMultiplier: 2
-  rotationSensitivity: 0.01
-  positionPrecision: 0.01
-  scalePrecision: 0.01
+  token:
+    m_InternalValue: 25000
+  handTiles: 
+  gameManager: {fileID: 0}
+  isAssigned: 0
+  isActive:
+    m_InternalValue: 0
+  offlineTilePrefab: {fileID: 5419383828522342354, guid: 8915a5a622faec44db1d9ce644bcb4fa, type: 3}
+  canvas: {fileID: 8059643992791943343, guid: 99d1478e1266e6e4b82da91400bc7b00, type: 3}
+  playerHand: {fileID: 7958271774474557874, guid: b16bfdf885f39ec41aaaf58ac94c8dba, type: 3}
+  enemyHandL: {fileID: 3599318978610141688, guid: 90540ce4c474346449dc475e926c8a9d, type: 3}
+  enemyHandR: {fileID: 4811586776974778990, guid: 55593a11844f9ad42b155276c131fee5, type: 3}
+  enemyHandU: {fileID: 5572487936310575076, guid: b00808bccb2a94c47a5682075f564bec, type: 3}
+  discardZoneU: {fileID: 139086877814625916, guid: 29bbe6b2637551147a8e0916efbee057, type: 3}
+  discardZoneL: {fileID: 498808638660239099, guid: 6a11fce5dd096ee4898f1663c6bd7297, type: 3}
+  discardZoneR: {fileID: 3027100719456516848, guid: 90c718bd6b305d54d8381efc86b597eb, type: 3}
+  discardZoneB: {fileID: 5375669305670406363, guid: 9ab4ce2ff23d6e74fbc925d5b7fd14c8, type: 3}
+  seatU: {fileID: 3250013037179756127, guid: 713f890a130b8ff4fab4fb09b2fbf002, type: 3}
+  seatL: {fileID: 4576090382950854842, guid: 7fcef190d771706479f5cbe4a1ce49f1, type: 3}
+  seatR: {fileID: 1867858476315387495, guid: 154d25e87ec76ac4cac0dec3556c696f, type: 3}
+  seatB: {fileID: 6315715254691994735, guid: ec995dd13b78656468f47376d5c0f8b5, type: 3}
+  tokenU: {fileID: 244700466211398256, guid: 4f2e6a4d3a4542f429dcffe9e0579f39, type: 3}
+  tokenL: {fileID: 416068338115804815, guid: f0d2971719ebff34f85e7f77625f2479, type: 3}
+  tokenR: {fileID: 8867931381599153520, guid: b494f32a4bf5ea44196297e9330494d2, type: 3}
+  tokenB: {fileID: 481073034565007595, guid: 3ab6e73e86d12c3408dace1c80bc4a09, type: 3}
