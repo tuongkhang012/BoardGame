@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 4224296560889252715}
   - component: {fileID: 2522836007713539644}
   m_Layer: 6
-  m_Name: Tile
+  m_Name: AITile
   m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

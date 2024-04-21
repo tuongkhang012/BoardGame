@@ -70,10 +70,14 @@ MonoBehaviour:
     m_InternalValue: 25000
   handTiles: 
   gameManager: {fileID: 0}
-  isAssigned: 0
+  isAssigned:
+    m_InternalValue: 0
   isActive:
     m_InternalValue: 0
   offlineTilePrefab: {fileID: 5419383828522342354, guid: 8915a5a622faec44db1d9ce644bcb4fa, type: 3}
+  onlineTilePrefab: {fileID: 5419383828522342354, guid: b66f524f7db68794f8af978365bc4dab, type: 3}
+  id:
+    m_InternalValue: 0
   canvas: {fileID: 8059643992791943343, guid: 99d1478e1266e6e4b82da91400bc7b00, type: 3}
   playerHand: {fileID: 7958271774474557874, guid: b16bfdf885f39ec41aaaf58ac94c8dba, type: 3}
   enemyHandL: {fileID: 3599318978610141688, guid: 90540ce4c474346449dc475e926c8a9d, type: 3}

@@ -11,11 +11,13 @@ public class PlayerManager : NetworkBehaviour
     [SerializeField] public List<int> handTiles;
 
     [SerializeField] private GameManager gameManager;
-    [SerializeField] private bool isAssigned = false;
+    [SerializeField] private NetworkVariable<bool> isAssigned = new NetworkVariable<bool>(false,
+               NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     [SerializeField] private NetworkVariable<bool> isActive = new NetworkVariable<bool>(false,
         NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [SerializeField] private GameObject offlineTilePrefab;
+    [SerializeField] private GameObject onlineTilePrefab;
     [SerializeField] public NetworkVariable<int> id = new NetworkVariable<int>(0,
                NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
@@ -88,10 +90,10 @@ public class PlayerManager : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        if (!isAssigned)
+        if (!isAssigned.Value)
         {
             gameManager.AssignPlayerServerRpc(OwnerClientId);
-            isAssigned = true;
+            isAssigned.Value = true;
         }
 
         if (isActive.Value)
@@ -106,7 +108,6 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void ReceiveTileClientRpc(int tile)
     {
-        if (!IsOwner) { return; }
         handTiles.Add(tile);
     }
 
@@ -154,7 +155,6 @@ public class PlayerManager : NetworkBehaviour
     {
         if (!IsOwner) return;
         Debug.Log("Spawning tiles locally");
-
         handTiles.Sort();
 
         for (int i = 0; i < handTiles.Count; i++)
@@ -168,7 +168,9 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void SpawnTileRClientRpc(int tileId, ClientRpcParams clientRpcParams)
     {
+        Debug.Log("Spawning tile for enemy R " + tileId + " on id: " + OwnerClientId);
         GameObject tile = Instantiate(offlineTilePrefab, enemyHandR.transform);
+        tile.transform.rotation = Quaternion.Euler(0, 0, 90);
         tile.GetComponent<DisplayTile>().displayId = tileId;
         tile.transform.SetParent(enemyHandR.transform, false);
     }
@@ -176,7 +178,9 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void SpawnTileUClientRpc(int tileId, ClientRpcParams clientRpcParams)
     {
+        Debug.Log("Spawning tile for enemy U " + tileId + " on id: " + OwnerClientId);
         GameObject tile = Instantiate(offlineTilePrefab, enemyHandU.transform);
+        tile.transform.rotation = Quaternion.Euler(0, 0, 180);
         tile.GetComponent<DisplayTile>().displayId = tileId;
         tile.transform.SetParent(enemyHandU.transform, false);
     }
@@ -184,7 +188,9 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void SpawnTileLClientRpc(int tileId, ClientRpcParams clientRpcParams)
     {
+        Debug.Log("Spawning tile for enemy L " + tileId + " on id: " + OwnerClientId);
         GameObject tile = Instantiate(offlineTilePrefab, enemyHandL.transform);
+        tile.transform.rotation = Quaternion.Euler(0, 0, 270);
         tile.GetComponent<DisplayTile>().displayId = tileId;
         tile.transform.SetParent(enemyHandL.transform, false);
     }

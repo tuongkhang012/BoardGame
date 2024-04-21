@@ -102,6 +102,13 @@ public class GameManager : NetworkBehaviour
                 break;
             case State.RoundStart:
                 {
+                    for(int i = 0; i < 4; i++)
+                    {
+                        NetworkClient client = NetworkManager.Singleton.ConnectedClients[players[i]];
+                        PlayerManager player = client.PlayerObject.GetComponent<PlayerManager>();
+                        player.GetComponent<PlayerManager>().handTiles.Sort();
+                    }
+
                     Debug.Log("Round Start");
                     for (int i = 0; i < 4; i++)
                     {
@@ -117,7 +124,7 @@ public class GameManager : NetworkBehaviour
                             {
                                 Send = new ClientRpcSendParams
                                 {
-                                    TargetClientIds = new List<ulong> { players[(i + 1)%4] }
+                                    TargetClientIds = new List<ulong> { players[i] }
                                 }
                             });
 
@@ -127,7 +134,7 @@ public class GameManager : NetworkBehaviour
                             {
                                 Send = new ClientRpcSendParams
                                 {
-                                    TargetClientIds = new List<ulong> { players[(i + 2) % 4] }
+                                    TargetClientIds = new List<ulong> { players[i] }
                                 }
                             });
 
@@ -137,7 +144,7 @@ public class GameManager : NetworkBehaviour
                             {
                                 Send = new ClientRpcSendParams
                                 {
-                                    TargetClientIds = new List<ulong> { players[(i + 3) % 4] }
+                                    TargetClientIds = new List<ulong> { players[i] }
                                 }
                             });
                         }
