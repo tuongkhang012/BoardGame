@@ -47,21 +47,9 @@ public class TileWall : NetworkBehaviour
         {
             for (int j = 0; j < TileDatabase.tileList.Count; j++)
             {
-                if (i == 0)
+                if (j == 9 || j == 19 || j == 29)
                 {
-                    if (TileDatabase.tileList[j].tileType == "5m" || TileDatabase.tileList[j].tileType == "5s"
-                        || TileDatabase.tileList[j].tileType == "5p")
-                    {
-                        continue;
-                    }
-                }
-                else
-                {
-                    if (TileDatabase.tileList[j].tileType == "0m" || TileDatabase.tileList[j].tileType == "0s"
-                        || TileDatabase.tileList[j].tileType == "0p")
-                    {
-                        continue;
-                    }
+                    continue;
                 }
 
                 wall.Add(TileDatabase.tileList[j].id);

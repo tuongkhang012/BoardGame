@@ -6,6 +6,7 @@ public class PlayerManagerOffline : MonoBehaviour
 {
     [SerializeField] private int token = 25000;
     [SerializeField] public List<int> handTiles;
+    [SerializeField] public List<int> winningTiles;
     [SerializeField] public List<GameObject> playerTiles;
     [SerializeField] private GameManagerOffline gameManager;
     [SerializeField] private bool isReady = false;
@@ -59,6 +60,13 @@ public class PlayerManagerOffline : MonoBehaviour
         SortTiles();
 
         gameManager.ChangeTurn();
+    }
+
+    public void RemoveTile(GameObject tile)
+    {
+        gameManager.AddDiscard(tile);
+        handTiles.Remove(tile.GetComponent<DisplayTile>().displayId);
+        playerTiles.Remove(tile);
     }
 
     public void SortTiles()

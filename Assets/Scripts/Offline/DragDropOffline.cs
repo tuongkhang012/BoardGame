@@ -67,8 +67,7 @@ public class DragDropOffline : MonoBehaviour
             }
 
             transform.SetParent(dropZone.transform, false);
-            playerManager.handTiles.Remove(gameObject.GetComponent<DisplayTile>().displayId);
-            playerManager.playerTiles.Remove(gameObject);
+            playerManager.RemoveTile(gameObject);
             playerManager.EndTurn();
 
             //Check for prompt

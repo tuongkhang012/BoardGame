@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8093985493646493937}
   - component: {fileID: 913457439676785836}
+  - component: {fileID: 2218384591724314628}
   m_Layer: 7
   m_Name: DiscardZoneR
   m_TagString: DropZone
@@ -57,6 +58,19 @@ MonoBehaviour:
   m_StartCorner: 2
   m_StartAxis: 1
   m_CellSize: {x: 60, y: 90}
-  m_Spacing: {x: -30, y: -30}
+  m_Spacing: {x: 30, y: -30}
   m_Constraint: 0
   m_ConstraintCount: 3
+--- !u!114 &2218384591724314628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3027100719456516848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2021677c11cb8d6498acacdb39887da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  discardedTiles: 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4351633263379167248}
   - component: {fileID: 3731856715451108099}
   - component: {fileID: 665694877408891257}
+  - component: {fileID: 1416338608222284324}
   m_Layer: 7
   m_Name: DiscardZoneB
   m_TagString: DropZone
@@ -106,3 +107,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1920, y: 920}
   m_EdgeRadius: 0
+--- !u!114 &1416338608222284324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5375669305670406363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2021677c11cb8d6498acacdb39887da6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  discardedTiles: 

@@ -10,7 +10,7 @@ public class RoundDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI roundText;
     public void ShowRound(int round, Action callback)
     {
-        roundText.text = "ROUND " + round.ToString();
+        roundText.text = "START ROUND";
         panel.SetActive(true);
         StartCoroutine(HideAfterDelay(2.0f, callback));
     }

@@ -5,8 +5,8 @@ using TMPro;
 
 public class TileWallOffline : MonoBehaviour
 {
-    public List<int> wall;
-    public List<int> dora;
+    public List<int> wall = new List<int>();
+    public List<int> dora = new List<int>();
 
     public int fullSize = 136;
     public int doraSize = 14;
@@ -45,21 +45,9 @@ public class TileWallOffline : MonoBehaviour
         {
             for (int j = 0; j < TileDatabase.tileList.Count; j++)
             {
-                if (i == 0)
+                if(j == 9 || j == 19 || j == 29)
                 {
-                    if (TileDatabase.tileList[j].tileType == "5m" || TileDatabase.tileList[j].tileType == "5s"
-                        || TileDatabase.tileList[j].tileType == "5p")
-                    {
-                        continue;
-                    }
-                }
-                else
-                {
-                    if (TileDatabase.tileList[j].tileType == "0m" || TileDatabase.tileList[j].tileType == "0s"
-                        || TileDatabase.tileList[j].tileType == "0p")
-                    {
-                        continue;
-                    }
+                    continue;
                 }
 
                 wall.Add(TileDatabase.tileList[j].id);
